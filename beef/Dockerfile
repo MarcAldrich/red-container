@@ -56,7 +56,7 @@ RUN sed -e '/get_permission$/s/^/#/' -i update-geoipdb
 RUN ./update-geoipdb
 
 EXPOSE 3000 4567 6789
-COPY entrypoint.sh /opt/beef/entrypoint.sh
+COPY beef/entrypoint.sh /opt/beef/entrypoint.sh
 RUN chmod a+x /opt/beef/entrypoint.sh
 
 
