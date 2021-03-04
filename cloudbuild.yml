@@ -9,14 +9,15 @@ steps:
   - |-
     # Get list of directories to loop over
     array=(*/)
-    dir_count=0
+    dir_count=1
     for dir in "${array[@]}"; do
         echo "Building $dir_count/${#array[@]}"
-        # test for md5sum
-        md5sum $dirDockerfile | cut -d ' ' -f1
-        dockerfile_dir = "${dir}Dockerfile"
-        dockerfile_md5 = $(md5sum ${dir}Dockerfile | cut -d ' ' -f1)
+        dockerfile_dir="$(echo $dir)Dockerfile"
+        dockerfile_md5=$(md5sum ${dir}Dockerfile | cut -d ' ' -f1)
         echo "Checking for existing image for tool: $dir with Dockerfile md5 hash of: $dockerfile_md5"
+        #test gcloud execution
+        gcloud --version
+        ((dir_count=dir_count+1))
     done
     # for loop: docker build {@dir}
         # if gcr.io/{PROJECT_ID}/image tag  == dockerfile hash
