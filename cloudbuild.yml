@@ -1,6 +1,7 @@
 ---
 steps:
-- name: 'bash'
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
   args:
   - '-eEuo'
   - 'pipefail'
@@ -9,7 +10,10 @@ steps:
     # Get list of directories to loop over
     array=(*/)
     for dir in "${array[@]}"; do
-        echo "$dir"
+        # test for md5sum
+        md5sum --version
+        dockerfile_md5 = "test"
+        echo "Checking for existing image for tool: $dir with Dockerfile md5 hash of: $md5hash"
     done
     # for loop: docker build {@dir}
         # if gcr.io/{PROJECT_ID}/image tag  == dockerfile hash
