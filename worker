@@ -38,7 +38,7 @@ do
   # Use gcloud to build to avoid trying to add docker.
   if [ -f "$task/Dockerfile" ]; then
     ls -lah
-    dockerfile_md5=$(md5sum ${task}Dockerfile | cut -d ' ' -f1)
+    dockerfile_md5=$(md5sum ${task}/Dockerfile | cut -d ' ' -f1)
 
     cd $task/
     #gcloud builds submit --tag gcr.io/${PROJECT_ID}/$task:$dockerfile_md5
