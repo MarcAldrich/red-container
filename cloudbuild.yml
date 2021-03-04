@@ -6,11 +6,16 @@ steps:
   - 'pipefail'
   - '-c'
   - |-
-    if (( $(date '+%-e') % 2 )); then
-      echo "today is an odd day"
-    else
-      echo "today is an odd day, with an even number"
-    fi
+    # Get list of directories to loop over
+    for dir in "${array[@]}"; do
+        echo "$dir"
+    done
+    # for loop: docker build {@dir}
+        # if gcr.io/{PROJECT_ID}/image tag  == dockerfile hash
+            # skip this build and continue
+        #docker build -t gcr.io/${PROJECT_ID}/{directory name}:{dockerfile hash} -f {directory name}/Dockerfile .
+        #docker push gcr.io/${PROJECT_ID}/{directory name}:{dockerfile hash}
+
 
 # - name: 'gcr.io/cloud-builders/docker'
 #  args:
