@@ -1,31 +1,42 @@
 ---
 steps:
-        #- name: 'gcr.io/cloud-builders/docker'
-        #  args:
-        #  - 'build'
-        #  - '--tag=gcr.io/${PROJECT_ID}/docker:latest'
-        #  - '--file=Dockerfile-cloudbuild'
-        #  - '.'
-#- name: 'gcr.io/${PROJECT_ID}/docker'
+- name: 'bash'
+  args:
+  - '-eEuo'
+  - 'pipefail'
+  - '-c'
+  - |-
+    if (( $(date '+%-e') % 2 )); then
+      echo "today is an odd day"
+    else
+      echo "today is an odd day, with an even number"
+    fi
+
+# - name: 'gcr.io/cloud-builders/docker'
 #  args:
 #    - 'build'
 #    - '--tag=gcr.io/${PROJECT_ID}/gobuster:latest'
 #    - '--file=gobuster/Dockerfile'
 #    - '.'
-#- name: 'gcr.io/${PROJECT_ID}/docker'
+# - name: 'gcr.io/cloud-builders/docker'
 #  args:
 #    - 'build'
 #    - '--tag=gcr.io/${PROJECT_ID}/tshark:latest'
 #    - '--file=tshark/Dockerfile'
 #    - '.'
-- name: 'gcr.io/cloud-builders/docker'
-  args:
-    - 'build'
-    - '--tag=gcr.io/${PROJECT_ID}/beef:latest'
-    - '--file=beef/Dockerfile'
-    - '.'
-images:
-        #- 'gcr.io/${PROJECT_ID}/docker:latest'
-        #- 'gcr.io/${PROJECT_ID}/gobuster:latest'
-        #- 'gcr.io/${PROJECT_ID}/tshark:latest'
-- 'gcr.io/${PROJECT_ID}/beef:latest'
+# - name: 'gcr.io/cloud-builders/docker'
+#   args:
+#     - 'build'
+#     - '--tag=gcr.io/${PROJECT_ID}/beef:latest'
+#     - '--file=beef/Dockerfile'
+#     - '.'
+# - name: 'gcr.io/cloud-builders/docker'
+#   args:
+#     - 'build'
+#     - '--tag=gcr.io/${PROJECT_ID}/beef:latest'
+#     - '--file=beef/Dockerfile'
+    # - '.'
+#images:
+    # - 'gcr.io/${PROJECT_ID}/gobuster:latest'
+    # - 'gcr.io/${PROJECT_ID}/tshark:latest'
+    # - 'gcr.io/${PROJECT_ID}/beef:latest'
