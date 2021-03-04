@@ -40,3 +40,4 @@ steps:
 
     # stop the workers
     bash pool.sh stop
+
