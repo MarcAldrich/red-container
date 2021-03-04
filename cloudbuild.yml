@@ -30,13 +30,13 @@ steps:
         # Only build if the tag does not equal the md5sum of the current Dockerfile
         if [ "$existing_tags" == "[]" ]; then
             # Enqueue this directory for a worker to build
-            #echo $toolname >>myqueue <<EOF
+            echo "Pushing $toolname onto queue..."
             echo $toolname >>myqueue
         else
             echo "Skipping build of $toolname: Image from this Dockerfile already exists in repo. https://gcr.io/$PROJECT_ID/$toolname"
         fi
 
-        echo "...COMPLETE!\n"
+        echo "...$toolname COMPLETE!\n"
     done
 
     # stop the workers when they are completed
