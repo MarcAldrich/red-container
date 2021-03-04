@@ -11,9 +11,9 @@ steps:
     array=(*/)
     for dir in "${array[@]}"; do
         # test for md5sum
-        md5sum --version
-        dockerfile_md5 = "test"
-        echo "Checking for existing image for tool: $dir with Dockerfile md5 hash of: $md5hash"
+        md5sum $dirDockerfile | cut -d ' ' -f1
+        dockerfile_md5 = $(md5sum $dirDockerfile | cut -d ' ' -f1)
+        echo "Checking for existing image for tool: $dir with Dockerfile md5 hash of: $dockerfile_md5"
     done
     # for loop: docker build {@dir}
         # if gcr.io/{PROJECT_ID}/image tag  == dockerfile hash
