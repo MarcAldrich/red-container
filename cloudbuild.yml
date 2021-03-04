@@ -9,7 +9,7 @@ steps:
   - |-
     # Get list of directories to loop over
     array=(*/)
-    dir_count = 0
+    dir_count=0
     for dir in "${array[@]}"; do
         echo "Building $dir_count/${#array[@]}"
         # test for md5sum
