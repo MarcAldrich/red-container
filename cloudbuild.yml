@@ -9,6 +9,13 @@ steps:
   - |-
     # Get list of directories to loop over
     array=(*/)
+
+    # start worker queue
+    bash pool.sh start
+
+    # <= LOOP SUMMARY => 
+    #   - Split directories specific tools
+    #   - Enqueue toolname for a worker to build
     dir_count=1
     for dir in "${array[@]}"; do
         echo "Building $dir_count/${#array[@]}"
@@ -19,52 +26,17 @@ steps:
 
         echo "Checking for existing image for tool: $toolname with Dockerfile md5 hash of: $dockerfile_md5"
         existing_tags=$(gcloud container images list-tags --filter="tags:$dockerfile_md5" --format=json gcr.io/$PROJECT_ID/$toolname)
-        is_existing_tags_empty=$(echo "$existing_tags" | wc -c)
-        echo "test: $is_existing_tags_empty"
-        if [ $is_existing_tags_empty -lt 4 ]; then
-            #"Empty return because 3 characters = [] (big assumption)"
-            # Time to build and push the image
-            # Use gcloud to build to avoid trying to add docker.
-            cd $dir
-            gcloud builds submit --tag gcr.io/${PROJECT_ID}/$toolname:$dockerfile_md5
-            cd ..
+        
+        # Only build if the tag does not equal the md5sum of the current Dockerfile
+        if [ "existing_tags" == "[]" ]; then
+            # Enqueue this directory for a worker to build
+            echo $toolname >>myqueue <<EOF
+        elif
+            echo "Skipping build of $toolname: Image from this Dockerfile already exists in repo. https://gcr.io/$PROJECT_ID/$toolname"
         fi
 
-        # Increment counter
-        ((dir_count=dir_count+1))
-        echo "...COMPLETE!"
+        echo "...COMPLETE!\n"
     done
-    # for loop: docker build {@dir}
-        # if gcr.io/{PROJECT_ID}/image tag  == dockerfile hash
-            # skip this build and continue
-        #
 
-
-# - name: 'gcr.io/cloud-builders/docker'
-#  args:
-#    - 'build'
-#    - '--tag=gcr.io/${PROJECT_ID}/gobuster:latest'
-#    - '--file=gobuster/Dockerfile'
-#    - '.'
-# - name: 'gcr.io/cloud-builders/docker'
-#  args:
-#    - 'build'
-#    - '--tag=gcr.io/${PROJECT_ID}/tshark:latest'
-#    - '--file=tshark/Dockerfile'
-#    - '.'
-# - name: 'gcr.io/cloud-builders/docker'
-#   args:
-#     - 'build'
-#     - '--tag=gcr.io/${PROJECT_ID}/beef:latest'
-#     - '--file=beef/Dockerfile'
-#     - '.'
-# - name: 'gcr.io/cloud-builders/docker'
-#   args:
-#     - 'build'
-#     - '--tag=gcr.io/${PROJECT_ID}/beef:latest'
-#     - '--file=beef/Dockerfile'
-    # - '.'
-#images:
-    # - 'gcr.io/${PROJECT_ID}/gobuster:latest'
-    # - 'gcr.io/${PROJECT_ID}/tshark:latest'
-    # - 'gcr.io/${PROJECT_ID}/beef:latest'
+    # stop the workers
+    bash pool.sh stop
