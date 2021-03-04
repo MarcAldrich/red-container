@@ -32,7 +32,7 @@ steps:
             # Enqueue this directory for a worker to build
             #echo $toolname >>myqueue <<EOF
             echo $toolname >>myqueue
-        elif
+        else
             echo "Skipping build of $toolname: Image from this Dockerfile already exists in repo. https://gcr.io/$PROJECT_ID/$toolname"
         fi
 
