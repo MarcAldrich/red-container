@@ -55,7 +55,7 @@ run(){
   # Launch N workers in parallel
   for i in `seq $WORKERS`
   do
-    PROJECT_ID=$PROJECT_ID /bin/bash worker $i &
+    /bin/bash worker $i &
     touch pid.$!
   done
 }

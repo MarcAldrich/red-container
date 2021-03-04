@@ -39,6 +39,9 @@ steps:
         echo "...COMPLETE!\n"
     done
 
-    # stop the workers
+    # stop the workers when they are completed
+    while [ $(bash pool.sh status; echo $?) -gt 0 ]; do
+        sleep(10)
+    done
     bash pool.sh stop
 
