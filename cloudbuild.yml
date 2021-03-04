@@ -22,7 +22,10 @@ steps:
         is_existing_tags_empty=$(echo "$existing_tags" | wc -c)
         echo "test: $is_existing_tags_empty"
         if [ $is_existing_tags_empty -lt 4 ]; then
-            echo "Empty return because 2 characters = [] (big assumption)"
+            #"Empty return because 3 characters = [] (big assumption)"
+            # Time to build and push the image
+            docker build -t gcr.io/${PROJECT_ID}/{directory name}:{dockerfile hash} -f {directory name}/Dockerfile .
+            docker push gcr.io/${PROJECT_ID}/{directory name}:{dockerfile hash}
         fi
 
         # Increment counter
@@ -31,8 +34,7 @@ steps:
     # for loop: docker build {@dir}
         # if gcr.io/{PROJECT_ID}/image tag  == dockerfile hash
             # skip this build and continue
-        #docker build -t gcr.io/${PROJECT_ID}/{directory name}:{dockerfile hash} -f {directory name}/Dockerfile .
-        #docker push gcr.io/${PROJECT_ID}/{directory name}:{dockerfile hash}
+        #
 
 
 # - name: 'gcr.io/cloud-builders/docker'
