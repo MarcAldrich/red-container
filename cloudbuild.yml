@@ -28,7 +28,7 @@ steps:
         existing_tags=$(gcloud container images list-tags --filter="tags:$dockerfile_md5" --format=json gcr.io/$PROJECT_ID/$toolname)
         
         # Only build if the tag does not equal the md5sum of the current Dockerfile
-        if [ "existing_tags" == "[]" ]; then
+        if [ "$existing_tags" == "[]" ]; then
             # Enqueue this directory for a worker to build
             #echo $toolname >>myqueue <<EOF
             echo $toolname >>myqueue
