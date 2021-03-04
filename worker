@@ -1,6 +1,5 @@
 # The first command line argument is a unique ID:
 WORKER_ID=$1
-PROJECT_ID
 # Simple logger
 #log(){
 #  printf "`date '+%H:%M:%S'` [Worker#%s] %s\n" "$WORKER_ID" "$1" >>worker.log
@@ -37,9 +36,8 @@ do
   log "Processing tool: ${task}"
   # Use gcloud to build to avoid trying to add docker.
   if [ -f "$task/Dockerfile" ]; then
-    ls -lah
     dockerfile_md5=$(md5sum ${task}/Dockerfile | cut -d ' ' -f1)
-
+    echo "Worker will build and publish $task with tag $dockerfile_md5. $task:$dockerfile_md5"
     cd $task/
     #gcloud builds submit --tag gcr.io/${PROJECT_ID}/$task:$dockerfile_md5
     gcloud builds submit --tag gcr.io/redteam-test-299121/$task:$dockerfile_md5
