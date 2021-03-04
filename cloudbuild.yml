@@ -32,6 +32,7 @@ steps:
 
         # Increment counter
         ((dir_count=dir_count+1))
+        echo "...COMPLETE!"
     done
     # for loop: docker build {@dir}
         # if gcr.io/{PROJECT_ID}/image tag  == dockerfile hash
