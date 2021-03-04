@@ -39,7 +39,7 @@ steps:
 
     # stop the workers when they are completed
     worker_count="10"
-    while [ "$worker_count" != "0" ]; do
+    while [ "$worker_count" != "NOK" ]; do
         echo "Waiting on workers...Active workers: $worker_count"
         sleep 10
         worker_count="$(bash pool.sh status)"
