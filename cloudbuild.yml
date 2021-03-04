@@ -24,8 +24,10 @@ steps:
         if [ $is_existing_tags_empty -lt 4 ]; then
             #"Empty return because 3 characters = [] (big assumption)"
             # Time to build and push the image
-            docker build -t gcr.io/${PROJECT_ID}/{directory name}:{dockerfile hash} -f {directory name}/Dockerfile .
-            docker push gcr.io/${PROJECT_ID}/{directory name}:{dockerfile hash}
+            # Use gcloud to build to avoid trying to add docker.
+            cd $dir
+            gcloud builds sumbit --tag gcr.io/${PROJECT_ID}/{$toolname}:{dockerfile_md5}
+            cd ..
         fi
 
         # Increment counter
