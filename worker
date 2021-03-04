@@ -30,8 +30,11 @@ do
   IFS= read -r -u 3 task
   flock -u 4
   if [ -z "$task" ]; then
-    sleep 1
-    continue
+    #For continuous task
+    #sleep 1
+    #continue
+    #For build system context (stop when queue empty)
+    exit 0
   fi
   log "Processing tool: ${task}"
   # Use gcloud to build to avoid trying to add docker.
@@ -39,7 +42,6 @@ do
     dockerfile_md5=$(md5sum ${task}/Dockerfile | cut -d ' ' -f1)
     echo "Worker will build and publish $task with tag $dockerfile_md5. $task:$dockerfile_md5"
     cd $task/
-    #gcloud builds submit --tag gcr.io/${PROJECT_ID}/$task:$dockerfile_md5
     gcloud builds submit --tag gcr.io/redteam-test-299121/$task:$dockerfile_md5
   fi
 done

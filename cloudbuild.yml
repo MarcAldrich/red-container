@@ -19,8 +19,7 @@ steps:
     dir_count=1
     for dir in "${array[@]}"; do
         echo "Building $dir_count/${#array[@]}"
-        # Trim the trailing / from the name
-        toolname=${dir:0:(-1)}
+        toolname=${dir:0:(-1)} # Trim the trailing / from the name
         dockerfile_dir="$(echo $dir)Dockerfile"
         dockerfile_md5=$(md5sum ${dir}Dockerfile | cut -d ' ' -f1)
 
@@ -28,7 +27,6 @@ steps:
         existing_tags=$(gcloud container images list-tags --filter="tags:$dockerfile_md5" --format=json gcr.io/$PROJECT_ID/$toolname)
         
         # Only build if the tag does not equal the md5sum of the current Dockerfile
-        echo "!!!DEBUG!!!   Existing tags: $existing_tags"
         if [ "$existing_tags" == "[]" ]; then
             # Enqueue this directory for a worker to build
             echo "Pushing $toolname onto queue..."
@@ -36,7 +34,6 @@ steps:
         else
             echo "Skipping build of $toolname: Image from this Dockerfile already exists in repo. https://gcr.io/$PROJECT_ID/$toolname"
         fi
-
         echo "...$toolname COMPLETE!\n"
     done
 
