@@ -36,7 +36,7 @@ do
   fi
   log "Processing tool: ${task}"
   # Use gcloud to build to avoid trying to add docker.
-  if [ -f "${$task}/Dockerfile" ]; then
+  if [ -f "$task/Dockerfile" ]; then
     dockerfile_md5=$(md5sum ${task}Dockerfile | cut -d ' ' -f1)
 
     cd $task/
