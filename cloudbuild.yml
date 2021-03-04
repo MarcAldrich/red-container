@@ -14,7 +14,7 @@ steps:
         echo "Building $dir_count/${#array[@]}"
         # test for md5sum
         md5sum $dirDockerfile | cut -d ' ' -f1
-        dockerfile_md5 = $(md5sum $dirDockerfile | cut -d ' ' -f1)
+        dockerfile_md5 = $(md5sum ${dir}Dockerfile | cut -d ' ' -f1)
         echo "Checking for existing image for tool: $dir with Dockerfile md5 hash of: $dockerfile_md5"
     done
     # for loop: docker build {@dir}
