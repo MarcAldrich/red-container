@@ -13,7 +13,7 @@ steps:
     for dir in "${array[@]}"; do
         echo "Building $dir_count/${#array[@]}"
         # Trim the trailing / from the name
-        toolname=${dir:(-1)}
+        toolname=${dir:0:(-1)}
         dockerfile_dir="$(echo $dir)Dockerfile"
         dockerfile_md5=$(md5sum ${dir}Dockerfile | cut -d ' ' -f1)
 
