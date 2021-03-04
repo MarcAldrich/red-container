@@ -26,7 +26,7 @@ steps:
             # Time to build and push the image
             # Use gcloud to build to avoid trying to add docker.
             cd $dir
-            gcloud builds sumbit --tag gcr.io/${PROJECT_ID}/{$toolname}:{dockerfile_md5}
+            gcloud builds submit --tag gcr.io/${PROJECT_ID}/{$toolname}:{dockerfile_md5}
             cd ..
         fi
 
