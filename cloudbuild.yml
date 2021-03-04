@@ -41,7 +41,7 @@ steps:
     done
 
     # stop the workers when they are completed
-    while [ "$(bash pool.sh status; echo $?) != "0" ]; do
+    while [ "$(bash pool.sh status; echo $?)" != "0" ]; do
         echo "Waiting on workers..."
         bash pool.sh status
         sleep 10
