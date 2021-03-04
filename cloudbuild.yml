@@ -12,14 +12,17 @@ steps:
     dir_count=1
     for dir in "${array[@]}"; do
         echo "Building $dir_count/${#array[@]}"
-        toolname=${dir:P:((L-1))}
+        # Trim the trailing / from the name
+        toolname=${dir:(-1)}
         dockerfile_dir="$(echo $dir)Dockerfile"
         dockerfile_md5=$(md5sum ${dir}Dockerfile | cut -d ' ' -f1)
+
         echo "Checking for existing image for tool: $dir with Dockerfile md5 hash of: $dockerfile_md5"
-        #test gcloud execution
-        echo $toolname
+        echo "Toolname: $toolname"
         existing_tags=$(gcloud container images list-tags --filter="tags:$dockerfile_md5" --format=json gcr.io/$PROJECT_ID/$toolname)
-        echo $existing_tags
+        echo "Existing tags: $existing_tags"
+
+        # Increment counter
         ((dir_count=dir_count+1))
     done
     # for loop: docker build {@dir}
