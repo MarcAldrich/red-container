@@ -19,7 +19,7 @@ steps:
 
         echo "Checking for existing image for tool: $toolname with Dockerfile md5 hash of: $dockerfile_md5"
         existing_tags=$(gcloud container images list-tags --filter="tags:$dockerfile_md5" --format=json gcr.io/$PROJECT_ID/$toolname)
-        if [ $(cat $existing_tags | wc -c) -eq 2 ]; then
+        if [ $(cat "$existing_tags" | wc -c) -eq 2 ]; then
             echo "Empty return because 2 characters = [] (big assumption)"
         fi
 
