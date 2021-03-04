@@ -23,7 +23,7 @@ steps:
     - 'build'
     - '--tag=gcr.io/${PROJECT_ID}/beef:latest'
     - '--file=beef/Dockerfile'
-    - '.'
+    - './'
 images:
 - 'gcr.io/${PROJECT_ID}/docker:latest'
         #- 'gcr.io/${PROJECT_ID}/gobuster:latest'
