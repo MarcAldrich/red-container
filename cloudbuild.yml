@@ -16,7 +16,8 @@ steps:
         dockerfile_md5=$(md5sum ${dir}Dockerfile | cut -d ' ' -f1)
         echo "Checking for existing image for tool: $dir with Dockerfile md5 hash of: $dockerfile_md5"
         #test gcloud execution
-        gcloud --version
+        existing_tags=$(gcloud container images list-tags --filter="tags:$dockerfile_md5" --format=json gcr.io/$PROJECT_ID/$dir)
+        echo $existing_tags
         ((dir_count=dir_count+1))
     done
     # for loop: docker build {@dir}
